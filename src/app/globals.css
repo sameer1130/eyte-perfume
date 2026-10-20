@@ -1,26 +1,205 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-paper: #f3f1ea;
+  --color-paper-2: #ebe7dc;
+  --color-paper-3: #e0dacb;
+  --color-ink: #14251e;
+  --color-ink-2: #2c3d35;
+  --color-mute: #66746c;
+  --color-gold: #a8844a;
+  --color-gold-2: #cdb27a;
+  --color-line: rgb(20 37 30 / 0.16);
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-spin-slow: spin 40s linear infinite;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument), "Times New Roman", serif;
+  --font-script: var(--font-script-face), cursive;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-stretch: 108%;
+    background: var(--color-paper);
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 1.5px solid var(--color-ink);
+    outline-offset: 3px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Condensed Didone caps: the era-residence voice. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.005em;
+  }
+
+  /* Flowing script accents that overlap display type. */
+  .script {
+    font-family: var(--font-script);
+    font-weight: 400;
+    text-transform: none;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  /* Tiny, wide-tracked labels. */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-stretch: 125%;
+    font-weight: 600;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.6s var(--ease-expo);
+  }
+  .link-underline:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+
+  .link-grow {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.6s var(--ease-expo);
+  }
+  .link-grow:hover {
+    background-size: 100% 1px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    height: 3.25rem;
+    padding: 0 1.75rem;
+    border-radius: 999px;
+    font-stretch: 125%;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition:
+      background-color 0.4s var(--ease-expo),
+      color 0.4s var(--ease-expo),
+      transform 0.4s var(--ease-expo);
+  }
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-ink:hover {
+    background: var(--color-ink-2);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-ink);
+  }
+
+  .hairline {
+    border-color: var(--color-line);
+  }
+
+  /* Keeps small text legible where it overlaps the botanicals. */
+  .halo {
+    text-shadow:
+      0 0 2px var(--color-paper),
+      0 0 10px var(--color-paper),
+      0 0 18px var(--color-paper);
+  }
+}
+
+/* Lenis smooth scrolling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Hero intro: plain CSS so the first paint is already animated. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.6em, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes wipe {
+  from {
+    clip-path: inset(-20% 100% -20% 0);
+  }
+  to {
+    clip-path: inset(-20% 0 -20% 0);
+  }
+}
+.intro-rise {
+  animation: rise-in 1.4s var(--ease-expo) both;
+}
+.intro-fade {
+  animation: fade-in 1.6s var(--ease-soft) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-rise,
+  .intro-fade {
+    animation: none;
+  }
 }

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#14251E"/>
+  <g fill="#CDB27A">
+    <path d="M21 19 23.2 10.4 27.6 15.6 32 7.8 36.4 15.6 40.8 10.4 43 19Z"/>
+    <rect x="20.6" y="20.2" width="22.8" height="2.2" rx="1"/>
+  </g>
+  <rect x="17" y="25" width="30" height="33" rx="9" fill="none" stroke="#CDB27A" stroke-width="1.6"/>
+  <text x="32" y="51" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#CDB27A">e</text>
+</svg>
