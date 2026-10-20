@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Monogram } from "@/components/brand/Monogram";
 import { Scene } from "@/components/botanica/Scene";
-import { INSTAGRAM_URL } from "@/components/layout/Footer";
+import { INSTAGRAM_URL } from "@/data/instagram";
 import { Bottle } from "@/components/product/Bottle";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Reveal, RevealLines } from "@/components/ui/Reveal";
@@ -10,7 +10,7 @@ import { FAMILY_LIST, type FamilySlug } from "@/data/families";
 import { PRODUCTS } from "@/data/products";
 import { bestsellers, getProduct, productsInFamily } from "@/lib/catalog";
 import { FamilyCard } from "./FamilyCard";
-import { NewsletterForm } from "./NewsletterForm";
+import { NewsletterForm } from "../NewsletterForm";
 
 export function HouseIntro() {
   return (

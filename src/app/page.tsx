@@ -1,25 +1,7 @@
-import { Hero } from "@/components/home/Hero";
-import {
-  Bestsellers,
-  Collections,
-  FamilyGrid,
-  HouseIntro,
-  PromiseStrip,
-  SocialSection,
-  ThreeActsIntro,
-} from "@/components/home/HomeSections";
+import { ArabianHome } from "@/components/home/arabian/ArabianHome";
+import { FloralHome } from "@/components/home/floral/FloralHome";
+import { HOME_THEME } from "@/config/theme";
 
 export default function HomePage() {
-  return (
-    <>
-      <Hero />
-      <HouseIntro />
-      <FamilyGrid />
-      <ThreeActsIntro />
-      <Bestsellers />
-      <Collections />
-      <PromiseStrip />
-      <SocialSection />
-    </>
-  );
+  return HOME_THEME === "floral" ? <FloralHome /> : <ArabianHome />;
 }

@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { Monogram } from "@/components/brand/Monogram";
 import { FAMILY_LIST } from "@/data/families";
-
-export const INSTAGRAM_URL = "https://www.instagram.com/eyte.perfumes/";
+import { INSTAGRAM_URL } from "@/data/instagram";
 
 const COLUMNS = [
   {
@@ -31,7 +30,7 @@ const COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t hairline bg-paper-2">
+    <footer className="site-footer relative overflow-hidden border-t hairline bg-paper-2">
       <div className="mx-auto max-w-[1400px] px-5 pb-8 pt-20 md:px-10 xl:px-28">
         <div className="grid gap-12 md:grid-cols-[1.3fr_repeat(3,1fr)]">
           <div>

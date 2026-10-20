@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { FamilySlug } from "@/data/families";
 import { subscribe, windAt } from "./engine";
-import { PARTICLES, type Particle, type ParticleKind, type WispConfig } from "./particle-kinds";
+import { PARTICLES, type Particle, type ParticleKind, type ParticleSystemId, type WispConfig } from "./particle-kinds";
 
 const DEG = Math.PI / 180;
 
@@ -126,7 +125,8 @@ export function Particles({
   lightSmoke = false,
   className,
 }: {
-  family: FamilySlug;
+  /** A scent family, or an ambient atmosphere such as "night-air". */
+  family: ParticleSystemId;
   /** Multiplier on the family's base particle count. */
   density?: number;
   lightSmoke?: boolean;

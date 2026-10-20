@@ -154,11 +154,12 @@ const miniBlossom =
     circle(ctx, s * 0.14);
   };
 
-let bokehSprite: HTMLCanvasElement | null = null;
+const sprites = new Map<string, HTMLCanvasElement>();
 
-/** Soft warm glow, rendered once and reused: per-frame gradients are costly on the GPU. */
-function getBokehSprite() {
-  if (bokehSprite) return bokehSprite;
+/** Soft radial glow, rendered once per colour and reused: per-frame gradients are costly on the GPU. */
+function glowSprite(key: string, stops: [number, string][]) {
+  const cached = sprites.get(key);
+  if (cached) return cached;
   const size = 64;
   const c = document.createElement("canvas");
   c.width = c.height = size;
@@ -166,19 +167,47 @@ function getBokehSprite() {
   if (g) {
     const r = size / 2;
     const grad = g.createRadialGradient(r, r, 0, r, r, r);
-    grad.addColorStop(0, "rgba(206, 146, 66, 0.75)");
-    grad.addColorStop(0.45, "rgba(218, 170, 100, 0.32)");
-    grad.addColorStop(1, "rgba(230, 190, 130, 0)");
+    for (const [at, color] of stops) grad.addColorStop(at, color);
     g.fillStyle = grad;
     g.fillRect(0, 0, size, size);
   }
-  bokehSprite = c;
+  sprites.set(key, c);
   return c;
 }
 
+const BOKEH_STOPS: [number, string][] = [
+  [0, "rgba(206, 146, 66, 0.75)"],
+  [0.45, "rgba(218, 170, 100, 0.32)"],
+  [1, "rgba(230, 190, 130, 0)"],
+];
+
+const GOLD_STOPS: [number, string][] = [
+  [0, "rgba(255, 226, 160, 0.9)"],
+  [0.35, "rgba(233, 190, 110, 0.38)"],
+  [1, "rgba(210, 160, 80, 0)"],
+];
+
 const bokeh: Draw = (ctx, p, t) => {
   ctx.globalAlpha *= 0.55 + 0.45 * Math.sin(t * 1.4 + p.phase);
-  ctx.drawImage(getBokehSprite(), -p.s, -p.s, p.s * 2, p.s * 2);
+  ctx.drawImage(glowSprite("bokeh", BOKEH_STOPS), -p.s, -p.s, p.s * 2, p.s * 2);
+};
+
+const goldDust: Draw = (ctx, p, t) => {
+  ctx.globalAlpha *= 0.35 + 0.65 * Math.abs(Math.sin(t * 1.1 + p.phase));
+  ctx.drawImage(glowSprite("gold", GOLD_STOPS), -p.s, -p.s, p.s * 2, p.s * 2);
+};
+
+const goldGlint: Draw = (ctx, p, t) => {
+  ctx.globalAlpha *= Math.pow(Math.abs(Math.sin(t * 1.7 + p.phase)), 3);
+  ctx.fillStyle = "#F4DEA6";
+  const s = p.s;
+  ctx.beginPath();
+  ctx.moveTo(0, -s * 2.2);
+  ctx.quadraticCurveTo(0, 0, s * 2.2, 0);
+  ctx.quadraticCurveTo(0, 0, 0, s * 2.2);
+  ctx.quadraticCurveTo(0, 0, -s * 2.2, 0);
+  ctx.quadraticCurveTo(0, 0, 0, -s * 2.2);
+  ctx.fill();
 };
 
 const oudChip: Draw = (ctx, p) => {
@@ -344,7 +373,19 @@ const greenLeaf =
 
 /* ---------------------------------------------------------------- */
 
-export const PARTICLES: Record<FamilySlug, ParticleSystem> = {
+/** Atmospheres that aren't tied to a scent family. */
+export type AmbientSlug = "night-air";
+export type ParticleSystemId = FamilySlug | AmbientSlug;
+
+export const PARTICLES: Record<ParticleSystemId, ParticleSystem> = {
+  "night-air": {
+    count: 46,
+    wisps: { sources: [0.3, 0.72], emit: 16, life: 9, rise: 0.09, width: 2.2, color: "232, 214, 190", alpha: 0.11 },
+    kinds: [
+      { weight: 26, size: [2, 7], spawn: "bottom", gravity: -5, terminal: 16, windForce: 16, spin: [0, 0], wobble: 14, draw: goldDust },
+      { weight: 12, size: [1.2, 2.6], spawn: "any", gravity: 0, terminal: 8, windForce: 10, spin: [10, 40], wobble: 6, draw: goldGlint },
+    ],
+  },
   citrus: {
     count: 34,
     kinds: [

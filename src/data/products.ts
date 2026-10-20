@@ -41,6 +41,8 @@ export type Product = {
   reviewCount: number;
   badges?: ("bestseller" | "new" | "limited")[];
   bottle: { shape: BottleShape; cap: CapStyle; liquid: string };
+  /** Real product photography (EYTE campaign imagery), used where the theme shows photos. */
+  photo?: string;
 };
 
 export const PRODUCTS: Product[] = [
@@ -78,6 +80,39 @@ export const PRODUCTS: Product[] = [
     reviewCount: 214,
     badges: ["bestseller"],
     bottle: { shape: "dome", cap: "gold", liquid: "#A8612B" },
+  },
+  {
+    slug: "lattafa-khamrah-qahwa",
+    name: "Khamrah Qahwa",
+    house: "Lattafa",
+    collection: "middle-eastern",
+    gender: "unisex",
+    concentration: "Eau de Parfum",
+    family: "gourmand",
+    tagline: "Arabic coffee, spiced and sweetened.",
+    description: [
+      "Cinnamon, cardamom and ginger open like freshly poured qahwa: warm, aromatic and inviting.",
+      "Praline and candied fruits sweeten the heart before coffee, vanilla, tonka and benzoin settle into a rich, roasted trail that stays all night.",
+    ],
+    notes: {
+      top: ["Cinnamon", "Cardamom", "Ginger"],
+      heart: ["Praline", "Candied Fruits", "White Flowers"],
+      base: ["Coffee", "Vanilla", "Tonka Bean", "Benzoin", "Musk"],
+    },
+    sizes: [{ ml: 100, price: 3650, compareAt: 4600 }],
+    profile: { longevity: "8–10 hrs", longevityScore: 5, projection: 4, sweetness: 4, freshness: 1 },
+    seasons: ["autumn", "winter"],
+    time: "night",
+    occasions: [
+      { title: "Majlis evenings", text: "Coffee and spice, made for long conversations." },
+      { title: "Winter nights", text: "Roasted warmth that blooms in cool air." },
+      { title: "Gifting", text: "The crystal-cut bottle feels like a treasure." },
+    ],
+    rating: 4.8,
+    reviewCount: 96,
+    badges: ["new"],
+    bottle: { shape: "facet", cap: "silver", liquid: "#B9782A" },
+    photo: "/images/instagram/khamrah-qahwa.webp",
   },
   {
     slug: "lattafa-yara",

@@ -11,6 +11,24 @@ npm run dev      # http://localhost:3000
 npm run build
 ```
 
+## Home page themes
+
+Only the home page is themed; shop, family and product pages always use the Floral look.
+
+| Theme | Folder | Preview |
+| --- | --- | --- |
+| **1 · Floral** — cream, era-residence inspired, botanicals in the breeze | `src/components/home/floral/` | `/themes/floral` |
+| **2 · Arabian Nights** — aubergine, gold & coffee brown; real EYTE Instagram imagery; ELORA / ZENFOX inspired | `src/components/home/arabian/` | `/themes/arabian` |
+
+- Switch the live home page in `src/config/theme.ts` (`HOME_THEME = "floral" | "arabian"`).
+- Theme 1 is also frozen in git: tag `theme-1-floral`, branch `theme/floral`.
+- Theme 2 re-skins the header, footer and shared sections by redefining the palette variables in a page-owned
+  `<style>` (`home/arabian/ThemeStyle.tsx`) that switches off when Next.js hides the page after navigation.
+- Imagery: hero slides and scent-type ovals use Unsplash photography (`public/images/stock/`, sources in
+  `CREDITS.txt`, Unsplash licence allows commercial use). The editorial, collections and Instagram wall use real
+  EYTE posts (`public/images/instagram/`, cropped from instagram.com/eyte.perfumes; wall data in
+  `src/data/instagram.ts`). Swap in EYTE's own campaign photography when available.
+
 ## Pages
 
 | Route | What it is |

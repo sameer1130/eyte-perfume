@@ -58,6 +58,7 @@ const NOTE_FAMILY: Record<string, FamilySlug | null> = {
   licorice: "gourmand",
   "gourmand accord": "gourmand",
   "tropical fruits": "gourmand",
+  "candied fruits": "gourmand",
   plum: "gourmand",
   honey: "gourmand",
 
