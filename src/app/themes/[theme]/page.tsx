@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { ArabianHome } from "@/components/home/arabian/ArabianHome";
-import { FloralHome } from "@/components/home/floral/FloralHome";
+import { HomeForTheme } from "@/components/home/HomeForTheme";
 import { HOME_THEME, HOME_THEMES, isHomeThemeId, type HomeThemeId } from "@/config/theme";
 import { cn } from "@/lib/cn";
 
@@ -33,7 +32,7 @@ async function ThemePreview({ params }: { params: Promise<{ theme: string }> }) 
   if (!isHomeThemeId(theme)) notFound();
   return (
     <>
-      {theme === "floral" ? <FloralHome /> : <ArabianHome />}
+      <HomeForTheme theme={theme} />
       <ThemeSwitcher current={theme} />
     </>
   );
@@ -43,7 +42,7 @@ function ThemeSwitcher({ current }: { current: HomeThemeId }) {
   return (
     <nav
       aria-label="Theme previews"
-      className="fixed bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-1 rounded-full border hairline bg-paper/90 p-1 shadow-xl backdrop-blur-md"
+      className="fixed bottom-5 left-1/2 z-40 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center gap-1 overflow-x-auto rounded-full border hairline bg-paper/90 p-1 shadow-xl backdrop-blur-md [scrollbar-width:none]"
     >
       {(Object.keys(HOME_THEMES) as HomeThemeId[]).map((id) => (
         <Link

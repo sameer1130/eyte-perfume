@@ -8,7 +8,7 @@ import { ScentTypes } from "./ScentTypes";
 import { ArabianThemeStyle } from "./ThemeStyle";
 
 /**
- * Theme 2 — "Arabian Nights": aubergine, gold and coffee brown, real EYTE
+ * Theme 2 — "Arabian Nights": black, gold and coffee brown, real EYTE
  * campaign imagery, after the ELORA and ZENFOX references. ArabianThemeStyle
  * re-skins the header, footer and shared sections while this page is shown.
  */

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { Scene } from "@/components/botanica/Scene";
-import { Bottle } from "@/components/product/Bottle";
+import { ProductImage } from "@/components/product/ProductImage";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ComparedTo, Faq, HowToWear, Reviews, ScentProfile, WearGuide } from "@/components/product/ProductSections";
 import { PurchasePanel } from "@/components/product/PurchasePanel";
@@ -15,6 +15,7 @@ import { FAMILIES } from "@/data/families";
 import { familyOfNote } from "@/data/notes";
 import { PRODUCTS } from "@/data/products";
 import { COLLECTION_LABEL, familyComposition, getProduct, relatedProducts, tierFamily } from "@/lib/catalog";
+import { familyInk, familySurface } from "@/lib/family-colors";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: PageProps<"/perfume/[slug]">)
   const product = getProduct(slug);
   if (!product) return {};
   return {
-    title: `${product.name} by ${product.house}`,
+    title: `${product.house} ${product.name}`,
     description: `${product.tagline} ${product.description[0]}`,
   };
 }
@@ -41,6 +42,7 @@ const CONCENTRATION_SHORT = {
   "Eau de Parfum": "EDP",
   "Eau de Toilette": "EDT",
   "Extrait de Parfum": "Extrait",
+  "Elixir de Parfum": "Elixir",
   Parfum: "Parfum",
 } as const;
 
@@ -83,17 +85,29 @@ async function PerfumeContent({ params }: { params: Promise<{ slug: string }> })
 
   return (
     <>
-      {/* Hero: illustrated bottle in its family's atmosphere + purchase panel */}
+      {/* Hero: the bottle in its family's atmosphere + purchase panel */}
       <section className="lg:grid lg:min-h-svh lg:grid-cols-[1.1fr_1fr]">
-        <div className="relative min-h-[78svh] overflow-hidden lg:min-h-svh" style={{ background: fam.colors.soft }}>
+        <div className="relative min-h-[78svh] overflow-hidden lg:min-h-svh" style={{ background: familySurface(fam) }}>
+          {/* A full photograph sits behind the botanicals; a cut-out bottle stands in front of them. */}
+          {!product.image.cutout && (
+            <>
+              <ProductImage product={product} sizes="(min-width: 1024px) 55vw, 100vw" eager />
+              <div className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-paper)_2%,transparent_40%)]" />
+            </>
+          )}
           <Scene family={product.family} sides={["right", "left"]} plantWidth="clamp(200px, 32vw, 520px)" />
-          <Bottle
-            product={product}
-            className="intro-rise absolute left-1/2 top-[54%] h-[58%] max-h-[620px] w-auto -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_30px_40px_rgba(20,37,30,0.12)]"
-          />
+          {product.image.cutout && (
+            <ProductImage
+              product={product}
+              sizes="(min-width: 1024px) 34vw, 70vw"
+              cutoutClassName="left-1/2 top-[18%] h-[62%] max-h-[660px] w-[70%] -translate-x-1/2"
+              className="intro-rise"
+              eager
+            />
+          )}
           <p
             className="script intro-fade absolute bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-[clamp(2.6rem,5vw,4.5rem)]"
-            style={{ color: fam.colors.accent, animationDelay: "0.4s" }}
+            style={{ color: familyInk(fam), animationDelay: "0.4s" }}
           >
             {fam.word}
           </p>
@@ -114,12 +128,14 @@ async function PerfumeContent({ params }: { params: Promise<{ slug: string }> })
           <p className="mt-3 text-[clamp(1.3rem,2vw,1.7rem)] italic leading-snug text-ink-2" style={{ fontFamily: "var(--font-display)" }}>
             {product.tagline}
           </p>
-          <div className="mt-5 flex items-center gap-3">
-            <Stars rating={product.rating} />
-            <a href="#reviews" className="eyebrow link-grow text-mute">
-              {product.rating.toFixed(1)} · {product.reviewCount} reviews
-            </a>
-          </div>
+          {product.rating !== undefined && (
+            <div className="mt-5 flex items-center gap-3">
+              <Stars rating={product.rating} />
+              <a href="#reviews" className="eyebrow link-grow text-mute">
+                {product.rating.toFixed(1)} · {product.reviewCount} reviews
+              </a>
+            </div>
+          )}
 
           <div className="mt-9">
             <PurchasePanel product={product} />
@@ -155,7 +171,7 @@ async function PerfumeContent({ params }: { params: Promise<{ slug: string }> })
         <Reveal className="mt-8 flex flex-wrap justify-center gap-2" stagger={0.04}>
           {families.map((f) => (
             <Link key={f.slug} href={`/families/${f.slug}`} className="eyebrow flex items-center gap-2 rounded-full border hairline px-3.5 py-2 transition-colors hover:border-ink">
-              <span className="h-2 w-2 rounded-full" style={{ background: f.colors.accent }} />
+              <span className="h-2 w-2 rounded-full" style={{ background: familyInk(f) }} />
               {f.name}
             </Link>
           ))}

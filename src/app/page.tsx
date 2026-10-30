@@ -1,7 +1,6 @@
-import { ArabianHome } from "@/components/home/arabian/ArabianHome";
-import { FloralHome } from "@/components/home/floral/FloralHome";
+import { HomeForTheme } from "@/components/home/HomeForTheme";
 import { HOME_THEME } from "@/config/theme";
 
 export default function HomePage() {
-  return HOME_THEME === "floral" ? <FloralHome /> : <ArabianHome />;
+  return <HomeForTheme theme={HOME_THEME} />;
 }

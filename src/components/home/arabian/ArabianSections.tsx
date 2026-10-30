@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Monogram } from "@/components/brand/Monogram";
 import { Scene } from "@/components/botanica/Scene";
-import { Bottle } from "@/components/product/Bottle";
+import { ProductImage } from "@/components/product/ProductImage";
 import { Reveal, RevealLines } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { INSTAGRAM_HANDLE, INSTAGRAM_POSTS, INSTAGRAM_URL } from "@/data/instagram";
@@ -21,7 +21,7 @@ export function RibbonBand() {
           itemClassName="display text-[clamp(1.6rem,3vw,2.6rem)] gold-text"
         />
       </div>
-      <div className="-mx-4 -mt-3 rotate-[1.5deg] border-y border-ink/10 bg-[linear-gradient(90deg,#24112e,#3b1d48,#24112e)] py-4">
+      <div className="-mx-4 -mt-3 rotate-[1.5deg] border-y border-ink/10 bg-[linear-gradient(90deg,#101010,#262626,#101010)] py-4">
         <Marquee
           reverse
           items={["Oud", "Amber", "Saffron", "Rose", "Vanilla", "Musk", "Coffee", "Sandalwood"]}
@@ -36,7 +36,7 @@ export function RibbonBand() {
 export function RitualEditorial() {
   return (
     <section className="relative overflow-hidden bg-paper-2 py-28 md:py-36">
-      <Mashrabiya id="ritual-lattice" className="text-gold opacity-[0.06]" />
+      <Mashrabiya id="ritual-lattice" className="text-gold opacity-25" />
       <div className="relative mx-auto grid max-w-[1400px] items-center gap-20 px-5 md:px-10 lg:grid-cols-2 xl:px-28">
         <Reveal className="relative mx-auto w-full max-w-[480px] pb-24 pr-10 md:pr-24">
           <div className="relative">
@@ -101,22 +101,27 @@ export function RitualEditorial() {
   );
 }
 
+/** Rasasi bottles from the catalogues, lined up on the Middle Eastern card. */
+const GULF_TRIO = ["nylaa-zahab-al-sahara", "im-rasasi-luxora", "nylaa-72-le-voyage"];
+
 export function CollectionsArabian() {
-  const intl = ["dior-sauvage", "mfk-baccarat-rouge-540", "ysl-libre"].map((s) => getProduct(s)!);
+  const trio = GULF_TRIO.map((s) => getProduct(s)!);
+  const sauvage = getProduct("dior-sauvage")!;
   return (
     <section className="mx-auto grid max-w-[1400px] gap-5 px-5 py-28 md:grid-cols-2 md:px-10 xl:px-28">
       <Link href="/shop?collection=middle-eastern" className="group relative flex min-h-[640px] flex-col overflow-hidden rounded-[28px] border border-gold/20 bg-[#0d0e10] p-8 md:p-12">
-        <div className="absolute inset-x-0 bottom-0 aspect-[720/490]">
-          <Image
-            src="/images/instagram/hawas-bottles.webp"
-            alt="Rasasi Hawas Ice, Elixir and Fire"
-            fill
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover transition-transform duration-[1600ms] ease-[var(--ease-expo)] group-hover:scale-[1.04]"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0d0e10,transparent_40%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[radial-gradient(60%_55%_at_50%_100%,rgb(211_175_107/0.22),transparent_75%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(70%_50%_at_20%_0%,rgb(255_255_255/0.07),transparent_70%)]" />
+        <div className="absolute inset-x-[8%] bottom-[7%] flex h-[44%] items-end justify-center gap-[3%]">
+          {trio.map((p, i) => (
+            <div
+              key={p.slug}
+              className={`relative w-[30%] transition-transform duration-[1200ms] ease-[var(--ease-expo)] ${i === 1 ? "h-full group-hover:-translate-y-5" : "h-[86%] group-hover:-translate-y-2.5"}`}
+            >
+              <ProductImage product={p} sizes="(min-width: 768px) 15vw, 30vw" cutoutClassName="inset-0" />
+            </div>
+          ))}
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(70%_50%_at_20%_0%,rgb(122_74_166/0.28),transparent_70%)]" />
         <div className="relative">
           <p className="eyebrow text-gold-2">From the Gulf</p>
           <h3 className="display mt-4 text-[clamp(2.6rem,3.6vw,4rem)]">Middle Eastern</h3>
@@ -124,33 +129,30 @@ export function CollectionsArabian() {
             عود
           </p>
           <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-ink-2">
-            Oud, saffron, amber and rose from Lattafa, Rasasi, Afnan and Ahsab: rich, long-lasting perfumery made to be noticed.
+            Oud, saffron, amber and rose from Lattafa and Rasasi, including the I&apos;m Rasasi and Nylaa lines: rich, long-lasting perfumery made to be noticed.
           </p>
         </div>
         <span className="eyebrow link-underline relative mt-6 self-start text-gold-2">Shop Middle Eastern</span>
       </Link>
 
-      <Link href="/shop?collection=international" className="group relative flex min-h-[640px] flex-col overflow-hidden rounded-[28px] border border-gold/20 bg-[radial-gradient(80%_60%_at_50%_85%,#5b2f74,transparent_70%),linear-gradient(170deg,#21102a,#140a17)] p-8 md:p-12">
-        <Scene family="floral" sides={[]} density={0.35} glow={false} />
+      <Link href="/shop?collection=international" className="group relative flex min-h-[640px] flex-col overflow-hidden rounded-[28px] border border-gold/20 bg-[#0a0a0b] p-8 md:p-12">
+        <ProductImage
+          product={sauvage}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          photoClassName="inset-x-0 bottom-0 h-[58%]"
+          className="transition-transform duration-[1600ms] ease-[var(--ease-expo)] group-hover:scale-[1.04]"
+        />
+        <div className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(to_bottom,#0a0a0b_0%,rgb(10_10_11/0.65)_28%,transparent_62%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(70%_50%_at_80%_0%,rgb(255_255_255/0.07),transparent_70%)]" />
         <div className="relative">
           <p className="eyebrow text-gold-2">From the maisons</p>
           <h3 className="display mt-4 text-[clamp(2.6rem,3.6vw,4rem)]">International</h3>
           <p className="script mt-1 text-5xl text-gold-2">Iconic</p>
           <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-ink-2">
-            The designer and niche icons the world falls for: Dior, Yves Saint Laurent, Tom Ford and Maison Francis Kurkdjian.
+            Designer icons from the great maisons, starting with Dior Sauvage Eau de Parfum.
           </p>
         </div>
-        <div className="relative mt-auto flex items-end justify-center gap-2 pt-8">
-          {intl.map((p, i) => (
-            <Bottle
-              key={p.slug}
-              product={p}
-              idSuffix="-intl"
-              className={`h-auto w-[30%] max-w-[150px] drop-shadow-[0_20px_24px_rgba(0,0,0,0.5)] transition-transform duration-[1200ms] ease-[var(--ease-expo)] ${i === 1 ? "group-hover:-translate-y-6" : "group-hover:-translate-y-3"}`}
-            />
-          ))}
-        </div>
-        <span className="eyebrow link-underline relative mt-8 self-start text-gold-2">Shop International</span>
+        <span className="eyebrow link-underline relative mt-6 self-start text-gold-2">Shop International</span>
       </Link>
     </section>
   );
@@ -180,7 +182,7 @@ export function InstagramWall() {
                   style={post.focus ? { objectPosition: post.focus } : undefined}
                 />
               </div>
-              <div className="absolute inset-0 flex items-end bg-[linear-gradient(to_top,rgb(20_10_23/0.85),transparent_55%)] p-4 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-end bg-[linear-gradient(to_top,rgb(10_10_10/0.85),transparent_55%)] p-4 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 <span className="eyebrow text-gold-2">{post.kind === "reel" ? "Watch reel" : "View post"} ↗</span>
               </div>
             </a>
@@ -198,7 +200,7 @@ export function InstagramWall() {
 
 export function NightClose() {
   return (
-    <section className="relative overflow-hidden bg-[radial-gradient(70%_80%_at_50%_100%,#4a2559,transparent_70%)] py-32">
+    <section className="relative overflow-hidden bg-[radial-gradient(70%_80%_at_50%_100%,#2a2a2a,transparent_70%)] py-32">
       <Scene family="woody" sides={[]} density={0.6} glow={false} lightSmoke />
       <div className="relative mx-auto max-w-[900px] px-5 text-center">
         <StarGlyph className="mx-auto h-5 w-5 text-gold-2" />

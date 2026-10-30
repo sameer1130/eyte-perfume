@@ -23,6 +23,13 @@ const NOTE_FAMILY: Record<string, FamilySlug | null> = {
   pineapple: "citrus",
   pear: "citrus",
   "black currant": "citrus",
+  blackcurrant: "citrus",
+  citrus: "citrus",
+  "green mandarin": "citrus",
+  "passion fruit": "citrus",
+  mango: "citrus",
+  rhubarb: "citrus",
+  champagne: "citrus",
 
   // Florals
   rose: "floral",
@@ -45,6 +52,14 @@ const NOTE_FAMILY: Record<string, FamilySlug | null> = {
   lychee: "floral",
   raspberry: "floral",
   peach: "floral",
+  blackberry: "floral",
+  "ylang-ylang": "floral",
+  osmanthus: "floral",
+  orris: "floral",
+  hedione: "floral",
+  "everlasting flower": "floral",
+  "transparent flowers": "floral",
+  "floral notes": "floral",
 
   // Vanilla & gourmand
   vanilla: "gourmand",
@@ -61,6 +76,19 @@ const NOTE_FAMILY: Record<string, FamilySlug | null> = {
   "candied fruits": "gourmand",
   plum: "gourmand",
   honey: "gourmand",
+  almond: "gourmand",
+  "vanilla orchid": "gourmand",
+  "brown sugar": "gourmand",
+  "vanillin sugar": "gourmand",
+  "pink praline": "gourmand",
+  coconut: "gourmand",
+  banana: "gourmand",
+  cherry: "gourmand",
+  nuts: "gourmand",
+  wheat: "gourmand",
+  "dry apricot": "gourmand",
+  cognac: "gourmand",
+  rhum: "gourmand",
 
   // Woods & oud
   oud: "woody",
@@ -79,6 +107,12 @@ const NOTE_FAMILY: Record<string, FamilySlug | null> = {
   rosewood: "woody",
   "fir resin": "woody",
   leather: "woody",
+  oak: "woody",
+  amyris: "woody",
+  "cypriol oil": "woody",
+  cypress: "woody",
+  "black tea": "woody",
+  "indonesian patchouli leaf": "woody",
 
   // Amber & spice
   saffron: "amber",
@@ -100,6 +134,15 @@ const NOTE_FAMILY: Record<string, FamilySlug | null> = {
   tobacco: "amber",
   elemi: "amber",
   "spicy notes": "amber",
+  "star anise": "amber",
+  spices: "amber",
+  "sacred spices": "amber",
+  "fresh ginger": "amber",
+  frankincense: "amber",
+  styrax: "amber",
+  "tolu balsam": "amber",
+  "mineral amber": "amber",
+  schinus: "amber",
 
   // Fresh & aquatic
   "sea notes": "aquatic",
@@ -116,6 +159,15 @@ const NOTE_FAMILY: Record<string, FamilySlug | null> = {
   bamboo: "aquatic",
   ambroxan: "aquatic",
   melon: "aquatic",
+  lavandin: "aquatic",
+  "clary sage": "aquatic",
+  "juniper berry": "aquatic",
+  "mint leaf": "aquatic",
+  "green leaf": "aquatic",
+  galbanum: "aquatic",
+  "aromatic notes": "aquatic",
+  seaweed: "aquatic",
+  salt: "aquatic",
 
   // Skin notes
   musk: null,

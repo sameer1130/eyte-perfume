@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { gustBy } from "@/components/botanica/engine";
 import { Scene } from "@/components/botanica/Scene";
 import { FAMILIES, type FamilySlug } from "@/data/families";
+import { familyInk, familySurface } from "@/lib/family-colors";
 
 export type ActData = {
   n: string;
@@ -61,7 +62,7 @@ export function ThreeActs({ acts }: { acts: ActData[] }) {
     <div className="relative lg:grid lg:grid-cols-2">
       <div
         className="sticky top-0 hidden h-svh overflow-hidden transition-colors duration-1000 lg:block"
-        style={{ background: fam.colors.soft }}
+        style={{ background: familySurface(fam) }}
         aria-hidden="true"
       >
         {leaving !== null && (
@@ -76,7 +77,7 @@ export function ThreeActs({ acts }: { acts: ActData[] }) {
           <span key={`n-${active}`} className="display intro-rise text-[clamp(8rem,15vw,15rem)] leading-[0.8]">
             {acts[active].n}
           </span>
-          <span key={`w-${active}`} className="script intro-rise mt-2 text-6xl transition-colors" style={{ color: fam.colors.accent, animationDelay: "0.1s" }}>
+          <span key={`w-${active}`} className="script intro-rise mt-2 text-6xl transition-colors" style={{ color: familyInk(fam), animationDelay: "0.1s" }}>
             {fam.word}
           </span>
           <span className="eyebrow halo mt-4 text-ink-2">Led by {fam.name}</span>
@@ -100,7 +101,7 @@ export function ThreeActs({ acts }: { acts: ActData[] }) {
               }}
               className="flex min-h-[90svh] flex-col justify-center px-5 py-20 md:px-10 lg:min-h-svh lg:px-16 xl:px-24"
             >
-              <div className="relative mb-10 aspect-[4/3] overflow-hidden rounded-[3px] lg:hidden" style={{ background: af.colors.soft }} aria-hidden="true">
+              <div className="relative mb-10 aspect-[4/3] overflow-hidden rounded-[3px] lg:hidden" style={{ background: familySurface(af) }} aria-hidden="true">
                 <ActScene act={act} index={i} />
                 <span className="display absolute inset-0 flex items-center justify-center text-[9rem] leading-none">{act.n}</span>
               </div>
@@ -112,7 +113,7 @@ export function ThreeActs({ acts }: { acts: ActData[] }) {
                 href={`/families/${act.family}`}
                 className="eyebrow mt-5 inline-flex items-center gap-2 self-start rounded-full border hairline px-3.5 py-2 transition-colors hover:border-ink"
               >
-                <span className="h-2 w-2 rounded-full" style={{ background: af.colors.accent }} />
+                <span className="h-2 w-2 rounded-full" style={{ background: familyInk(af) }} />
                 {af.name}
               </Link>
               <ul className="mt-10 border-t hairline">
@@ -122,7 +123,7 @@ export function ThreeActs({ acts }: { acts: ActData[] }) {
                     <li key={note.name} className="flex items-baseline justify-between gap-4 border-b hairline py-4">
                       <span className="display text-[clamp(2rem,3vw,2.8rem)] leading-none">{note.name}</span>
                       <span className="eyebrow flex shrink-0 items-center gap-2 text-mute">
-                        <span className="h-1.5 w-1.5 rounded-full" style={{ background: nf?.colors.accent ?? "var(--color-mute)" }} />
+                        <span className="h-1.5 w-1.5 rounded-full" style={{ background: nf ? familyInk(nf) : "var(--color-mute)" }} />
                         {nf?.short ?? "Skin"}
                       </span>
                     </li>

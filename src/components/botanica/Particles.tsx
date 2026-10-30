@@ -139,8 +139,9 @@ export function Particles({
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
     const base = PARTICLES[family];
-    const system =
-      lightSmoke && base.wisps ? { ...base, wisps: { ...base.wisps, color: "236, 226, 208", alpha: 0.16 } } : base;
+    // Dark themes set color-scheme: dark, where the default brown smoke would vanish.
+    const light = lightSmoke || getComputedStyle(canvas).colorScheme === "dark";
+    const system = light && base.wisps ? { ...base, wisps: { ...base.wisps, color: "236, 226, 208", alpha: 0.16 } } : base;
     const totalWeight = system.kinds.reduce((a, k) => a + k.weight, 0);
     let W = 0;
     let H = 0;

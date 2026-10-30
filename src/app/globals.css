@@ -10,6 +10,8 @@
   --color-gold: #a8844a;
   --color-gold-2: #cdb27a;
   --color-line: rgb(20 37 30 / 0.16);
+  /* Backdrop behind drawers. */
+  --color-scrim: rgb(20 37 30 / 0.3);
 
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
@@ -26,6 +28,12 @@
 }
 
 @layer base {
+  /* How strongly family colours show (see src/lib/family-colors.ts); dark themes lower them. */
+  :root {
+    --family-soft: 100%;
+    --family-ink: 100%;
+  }
+
   html {
     background: var(--color-paper);
     color: var(--color-ink);
@@ -206,9 +214,8 @@ html.lenis body {
   }
 }
 
-/* Theme 2 (Arabian Nights) palette overrides live in
-   src/components/home/arabian/ThemeStyle.tsx so they switch off when the
-   page is hidden by Next.js' Activity-preserved navigation. */
+/* Theme palettes (e.g. Theme 2 in src/components/home/arabian/ThemeStyle.tsx)
+   override the variables above; the root layout applies the live one. */
 
 .gold-text {
   background: linear-gradient(100deg, #b98a3e 0%, #f1dca8 38%, #c99b4e 62%, #f4e2b6 100%);

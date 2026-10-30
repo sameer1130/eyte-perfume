@@ -9,6 +9,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FAMILIES, FAMILY_LIST, FAMILY_SLUGS, isFamilySlug } from "@/data/families";
 import { PRODUCTS } from "@/data/products";
 import { productsInFamily, tierFamily, TIERS } from "@/lib/catalog";
+import { familyInk, familySurface } from "@/lib/family-colors";
 
 export function generateStaticParams() {
   return FAMILY_SLUGS.map((slug) => ({ slug }));
@@ -40,7 +41,7 @@ async function FamilyContent({ params }: { params: Promise<{ slug: string }> }) 
 
   return (
     <>
-      <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-5 pb-16 pt-36 text-center" style={{ background: fam.colors.soft }}>
+      <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-5 pb-16 pt-36 text-center" style={{ background: familySurface(fam) }}>
         <Scene family={slug} sides={["right", "left"]} plantWidth="clamp(240px, 44vw, 680px)" />
         <div className="relative">
           <nav aria-label="Breadcrumb" className="eyebrow text-ink-2">
@@ -51,7 +52,7 @@ async function FamilyContent({ params }: { params: Promise<{ slug: string }> }) 
             <span>0{index + 1}</span>
           </nav>
           <h1 className="display intro-rise mt-6 text-[clamp(4rem,12vw,12rem)]">{fam.name}</h1>
-          <p className="script intro-rise -mt-[0.1em] text-[clamp(3rem,7vw,6.5rem)] leading-none" style={{ color: fam.colors.accent, animationDelay: "0.2s" }}>
+          <p className="script intro-rise -mt-[0.1em] text-[clamp(3rem,7vw,6.5rem)] leading-none" style={{ color: familyInk(fam), animationDelay: "0.2s" }}>
             {fam.word}
           </p>
           <p className="intro-rise mx-auto mt-8 max-w-lg text-[15px] leading-relaxed text-ink-2" style={{ animationDelay: "0.3s" }}>
@@ -71,7 +72,7 @@ async function FamilyContent({ params }: { params: Promise<{ slug: string }> }) 
       </section>
 
       <section className="mx-auto max-w-[1400px] px-5 py-28 md:px-10 xl:px-28">
-        <SectionHeading eyebrow={`${primary.length} ${primary.length === 1 ? "perfume" : "perfumes"}`} before={fam.short} script="signatures" scriptColor={fam.colors.accent} />
+        <SectionHeading eyebrow={`${primary.length} ${primary.length === 1 ? "perfume" : "perfumes"}`} before={fam.short} script="signatures" scriptColor={familyInk(fam)} />
         <Reveal className="mt-16 grid grid-cols-2 gap-x-4 gap-y-14 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4" stagger={0.06}>
           {primary.map((p) => (
             <ProductCard key={p.slug} product={p} />
@@ -82,7 +83,7 @@ async function FamilyContent({ params }: { params: Promise<{ slug: string }> }) 
       {accents.length > 0 && (
         <section className="border-t hairline">
           <div className="mx-auto max-w-[1400px] px-5 py-28 md:px-10 xl:px-28">
-            <SectionHeading eyebrow={`With a touch of ${fam.short.toLowerCase()}`} before="Also" script="featuring" scriptColor={fam.colors.accent} />
+            <SectionHeading eyebrow={`With a touch of ${fam.short.toLowerCase()}`} before="Also" script="featuring" scriptColor={familyInk(fam)} />
             <Reveal className="mx-auto mt-6 max-w-md text-center text-[14px] text-ink-2">
               Perfumes from other families where {fam.name.toLowerCase()} leads one of the three acts.
             </Reveal>
@@ -100,10 +101,10 @@ async function FamilyContent({ params }: { params: Promise<{ slug: string }> }) 
           <p className="eyebrow text-center text-mute">Explore another family</p>
           <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-5">
             {FAMILY_LIST.filter((f) => f.slug !== slug).map((f) => (
-              <Link key={f.slug} href={`/families/${f.slug}`} className="group rounded-[3px] p-5 transition-colors" style={{ background: f.colors.soft }}>
-                <span className="h-2 w-2 rounded-full" style={{ background: f.colors.accent, display: "block" }} />
+              <Link key={f.slug} href={`/families/${f.slug}`} className="group rounded-[3px] p-5 transition-colors" style={{ background: familySurface(f) }}>
+                <span className="h-2 w-2 rounded-full" style={{ background: familyInk(f), display: "block" }} />
                 <span className="display mt-6 block text-3xl leading-[0.95]">{f.name}</span>
-                <span className="script mt-1 block text-2xl" style={{ color: f.colors.accent }}>
+                <span className="script mt-1 block text-2xl" style={{ color: familyInk(f) }}>
                   {f.word}
                 </span>
               </Link>

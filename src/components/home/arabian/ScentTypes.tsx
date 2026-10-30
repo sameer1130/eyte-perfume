@@ -8,6 +8,7 @@ import { Scene } from "@/components/botanica/Scene";
 import { Reveal } from "@/components/ui/Reveal";
 import { FAMILIES, FAMILY_LIST, type FamilySlug } from "@/data/families";
 import { cn } from "@/lib/cn";
+import { familyInk } from "@/lib/family-colors";
 
 /* Photography: Unsplash (see public/images/stock/CREDITS.txt). */
 const PHOTOS: Record<FamilySlug, { src: string; alt: string; focus: string }> = {
@@ -51,23 +52,15 @@ export function ScentTypes({ counts }: { counts: Record<FamilySlug, number> }) {
         className="animate-ken-burns object-cover"
         style={{ objectPosition: PHOTOS[slug].focus }}
       />
-      <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_50%_45%,transparent_55%,rgb(20_10_23/0.55))]" />
-      {/* The oval clips its corners; rising plants sit further in so they grow into view. */}
-      <Scene
-        family={slug}
-        sides={["right", "left"]}
-        plantWidth={FAMILIES[slug].growth === "rise" ? "82%" : "92%"}
-        offset={FAMILIES[slug].growth === "rise" ? "-1%" : "-12%"}
-        density={0.45}
-        lightSmoke
-        glow={false}
-      />
+      <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_50%_45%,transparent_55%,rgb(10_10_10/0.55))]" />
+      {/* The oval clips its corners, so hanging plants start outside it. */}
+      <Scene family={slug} sides={["right", "left"]} plantWidth="92%" offset="-12%" density={0.45} lightSmoke glow={false} />
     </>
   );
 
   return (
     <section className="relative overflow-hidden py-28 md:py-36">
-      <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-5 md:px-10 lg:grid-cols-[1.1fr_1fr] xl:px-28">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-16 px-5 md:px-10 lg:grid-cols-[1.1fr_1fr] xl:px-28">
         <div>
           <Reveal as="p" className="eyebrow text-gold-2" y={14}>
             Shop by scent type
@@ -95,7 +88,7 @@ export function ScentTypes({ counts }: { counts: Record<FamilySlug, number> }) {
                     </svg>
                     <span
                       className={cn(
-                        "display whitespace-nowrap text-[clamp(1.9rem,3.3vw,3.4rem)] transition-colors duration-500",
+                        "display text-[clamp(1.9rem,3.3vw,3.4rem)] transition-colors duration-500 sm:whitespace-nowrap",
                         on ? "gold-text" : "text-ink/45 group-hover:text-ink/80",
                       )}
                     >
@@ -124,7 +117,7 @@ export function ScentTypes({ counts }: { counts: Record<FamilySlug, number> }) {
             </div>
           </div>
           <div className="mt-10 text-center">
-            <p className="script text-4xl" style={{ color: fam.colors.accent }}>
+            <p className="script text-4xl" style={{ color: familyInk(fam) }}>
               {fam.word}
             </p>
             <p className="mx-auto mt-3 max-w-xs text-[14px] leading-relaxed text-ink-2">{fam.tagline}</p>

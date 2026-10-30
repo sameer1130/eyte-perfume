@@ -374,7 +374,7 @@ const greenLeaf =
 /* ---------------------------------------------------------------- */
 
 /** Atmospheres that aren't tied to a scent family. */
-export type AmbientSlug = "night-air";
+export type AmbientSlug = "night-air" | "gold-smoke";
 export type ParticleSystemId = FamilySlug | AmbientSlug;
 
 export const PARTICLES: Record<ParticleSystemId, ParticleSystem> = {
@@ -384,6 +384,14 @@ export const PARTICLES: Record<ParticleSystemId, ParticleSystem> = {
     kinds: [
       { weight: 26, size: [2, 7], spawn: "bottom", gravity: -5, terminal: 16, windForce: 16, spin: [0, 0], wobble: 14, draw: goldDust },
       { weight: 12, size: [1.2, 2.6], spawn: "any", gravity: 0, terminal: 8, windForce: 10, spin: [10, 40], wobble: 6, draw: goldGlint },
+    ],
+  },
+  "gold-smoke": {
+    count: 64,
+    wisps: { sources: [0.4, 0.58, 0.74], emit: 18, life: 8, rise: 0.1, width: 2.6, color: "214, 172, 96", alpha: 0.2 },
+    kinds: [
+      { weight: 30, size: [1.6, 5.5], spawn: "bottom", gravity: -6, terminal: 18, windForce: 18, spin: [0, 0], wobble: 16, draw: goldDust },
+      { weight: 14, size: [1, 2.4], spawn: "any", gravity: 0, terminal: 8, windForce: 12, spin: [10, 40], wobble: 6, draw: goldGlint },
     ],
   },
   citrus: {

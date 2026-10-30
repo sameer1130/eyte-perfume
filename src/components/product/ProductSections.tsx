@@ -5,6 +5,7 @@ import { Stars } from "@/components/ui/Stars";
 import { FAMILIES } from "@/data/families";
 import type { Product, Season } from "@/data/products";
 import { familyComposition } from "@/lib/catalog";
+import { familyInk } from "@/lib/family-colors";
 
 const SCALES = {
   projection: ["Intimate", "Soft", "Moderate", "Strong", "Room-filling"],
@@ -51,7 +52,7 @@ export function ScentProfile({ product }: { product: Product }) {
                 <div
                   key={c.family}
                   className="h-full"
-                  style={{ width: `${c.share * 100}%`, background: FAMILIES[c.family].colors.accent }}
+                  style={{ width: `${c.share * 100}%`, background: familyInk(FAMILIES[c.family]) }}
                   title={`${FAMILIES[c.family].name} ${Math.round(c.share * 100)}%`}
                 />
               ))}
@@ -62,9 +63,9 @@ export function ScentProfile({ product }: { product: Product }) {
                 return (
                   <li key={c.family} className="flex items-center justify-between border-b hairline pb-4">
                     <Link href={`/families/${c.family}`} className="flex items-center gap-3">
-                      <span className="h-3 w-3 rounded-full" style={{ background: f.colors.accent }} />
+                      <span className="h-3 w-3 rounded-full" style={{ background: familyInk(f) }} />
                       <span className="display text-3xl">{f.name}</span>
-                      <span className="script hidden text-3xl sm:inline" style={{ color: f.colors.accent }}>
+                      <span className="script hidden text-3xl sm:inline" style={{ color: familyInk(f) }}>
                         {f.word}
                       </span>
                     </Link>
@@ -197,6 +198,8 @@ function sampleReviews(product: Product) {
 }
 
 export function Reviews({ product }: { product: Product }) {
+  const { rating, reviewCount } = product;
+  if (rating === undefined) return null;
   const reviews = sampleReviews(product);
   return (
     <section className="border-t hairline">
@@ -204,9 +207,9 @@ export function Reviews({ product }: { product: Product }) {
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row md:items-end">
           <SectionHeading eyebrow="Reviews" before="What people" script="say" align="left" className="text-center md:text-left" />
           <Reveal className="text-center md:text-right">
-            <p className="display text-7xl">{product.rating.toFixed(1)}</p>
-            <Stars rating={product.rating} />
-            <p className="eyebrow mt-2 text-mute">{product.reviewCount} reviews</p>
+            <p className="display text-7xl">{rating.toFixed(1)}</p>
+            <Stars rating={rating} />
+            <p className="eyebrow mt-2 text-mute">{reviewCount} reviews</p>
           </Reveal>
         </div>
         <Reveal className="mt-14 grid gap-4 md:grid-cols-3" stagger={0.08}>

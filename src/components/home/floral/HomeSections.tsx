@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Monogram } from "@/components/brand/Monogram";
 import { Scene } from "@/components/botanica/Scene";
 import { INSTAGRAM_URL } from "@/data/instagram";
-import { Bottle } from "@/components/product/Bottle";
+import { ProductImage } from "@/components/product/ProductImage";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Reveal, RevealLines } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -127,8 +127,8 @@ export function Bestsellers() {
 }
 
 export function Collections() {
-  const me = ["lattafa-khamrah", "lattafa-oud-for-glory", "lattafa-yara"].map((s) => getProduct(s)!);
-  const intl = ["dior-sauvage", "mfk-baccarat-rouge-540", "ysl-libre"].map((s) => getProduct(s)!);
+  const me = ["im-rasasi-cobra-silk", "nylaa-54-le-journal", "im-rasasi-luxora"].map((s) => getProduct(s)!);
+  const sauvage = getProduct("dior-sauvage")!;
   return (
     <section className="grid md:grid-cols-2">
       <Link href="/shop?collection=middle-eastern" className="group relative flex min-h-[620px] flex-col overflow-hidden bg-ink p-8 text-paper md:min-h-[760px] md:p-14">
@@ -138,17 +138,17 @@ export function Collections() {
           <h3 className="display mt-5 text-[clamp(3.4rem,6vw,6rem)]">Middle Eastern</h3>
           <p className="script -mt-2 text-5xl text-gold-2">Arabian nights</p>
           <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-paper/75">
-            Oud, saffron, amber and rose: the rich, long-lasting perfumery of Dubai and beyond, from Lattafa, Afnan, Rasasi and more.
+            Oud, saffron, amber and rose: the rich, long-lasting perfumery of Dubai and beyond, from Lattafa and Rasasi.
           </p>
         </div>
         <div className="relative mt-auto flex items-end justify-center gap-2 pt-10">
           {me.map((p, i) => (
-            <Bottle
+            <div
               key={p.slug}
-              product={p}
-              idSuffix="-col"
-              className={`h-auto w-[30%] max-w-[170px] transition-transform duration-[1200ms] ease-[var(--ease-expo)] ${i === 1 ? "group-hover:-translate-y-6" : "group-hover:-translate-y-3"}`}
-            />
+              className={`relative h-[clamp(180px,22vw,280px)] w-[30%] max-w-[170px] transition-transform duration-[1200ms] ease-[var(--ease-expo)] ${i === 1 ? "group-hover:-translate-y-6" : "group-hover:-translate-y-3"}`}
+            >
+              <ProductImage product={p} sizes="170px" cutoutClassName="inset-0" />
+            </div>
           ))}
         </div>
         <span className="eyebrow link-underline relative mt-8 self-start">Shop Middle Eastern</span>
@@ -160,18 +160,15 @@ export function Collections() {
           <h3 className="display mt-5 text-[clamp(3.4rem,6vw,6rem)]">International</h3>
           <p className="script -mt-2 text-5xl text-gold">Iconic</p>
           <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-ink-2">
-            The designer and niche icons the world falls for, from Paris to Milan: Dior, Yves Saint Laurent, Tom Ford, Maison Francis Kurkdjian.
+            Designer icons from the great maisons, starting with Dior Sauvage Eau de Parfum.
           </p>
         </div>
-        <div className="relative mt-auto flex items-end justify-center gap-2 pt-10">
-          {intl.map((p, i) => (
-            <Bottle
-              key={p.slug}
-              product={p}
-              idSuffix="-col"
-              className={`h-auto w-[30%] max-w-[170px] transition-transform duration-[1200ms] ease-[var(--ease-expo)] ${i === 1 ? "group-hover:-translate-y-6" : "group-hover:-translate-y-3"}`}
-            />
-          ))}
+        <div className="relative mt-auto aspect-[4/3] w-full overflow-hidden rounded-[3px]">
+          <ProductImage
+            product={sauvage}
+            sizes="(min-width: 768px) 45vw, 90vw"
+            className="transition-transform duration-[1600ms] ease-[var(--ease-expo)] group-hover:scale-[1.04]"
+          />
         </div>
         <span className="eyebrow link-underline relative mt-8 self-start">Shop International</span>
       </Link>

@@ -1,9 +1,9 @@
 /**
- * Home page themes. Only the home page changes between themes; product,
- * family and shop pages keep the Floral look.
+ * Site themes. Each has its own home page, and the live theme's palette also
+ * colours the shop, family and product pages (see SiteThemeStyle).
  *
- * To switch back to Theme 1, set HOME_THEME to "floral".
- * Both themes can always be previewed at /themes/floral and /themes/arabian.
+ * To switch theme, set HOME_THEME to another id below.
+ * Every theme can always be previewed at /themes/<id>.
  * Theme 1 is also preserved in git as tag `theme-1-floral` / branch `theme/floral`.
  */
 export const HOME_THEMES = {
@@ -13,7 +13,11 @@ export const HOME_THEMES = {
   },
   arabian: {
     label: "Theme 2 · Arabian Nights",
-    description: "Purple, gold and coffee brown, with real EYTE campaign imagery.",
+    description: "Black, gold and coffee brown, with real EYTE campaign imagery.",
+  },
+  noir: {
+    label: "Theme 3 · Noir & Gold",
+    description: "Near-black, ivory and gold, with a bottle on stone in gold smoke.",
   },
 } as const;
 

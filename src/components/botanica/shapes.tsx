@@ -337,6 +337,42 @@ export function PodBunch({ pods, stem, sheen }: { pods: Pod[]; stem: string; she
   );
 }
 
+export type Berry = { x: number; y: number; r: number };
+
+/** A drooping cluster of small round berries (pink peppercorns, eucalyptus buds), hanging along +y. */
+export function BerryCluster({ berries, fill, stem }: { berries: Berry[]; fill: string; stem: string }) {
+  return (
+    <g>
+      {berries.map((b, i) => (
+        <path
+          key={`t${i}`}
+          d={`M0 0Q${f(b.x * 0.15)} ${f(b.y * 0.6)} ${f(b.x)} ${f(b.y - b.r * 0.7)}`}
+          stroke={stem}
+          strokeWidth={0.7}
+          fill="none"
+          strokeLinecap="round"
+        />
+      ))}
+      {berries.map((b, i) => (
+        <circle key={i} cx={f(b.x)} cy={f(b.y)} r={f(b.r)} fill={fill} />
+      ))}
+    </g>
+  );
+}
+
+/** Round eucalyptus leaf on a short stalk, opening along +x; the upper half catches the light. */
+export function DiscLeaf({ r, stalk, fill, light, vein }: { r: number; stalk: number; fill: string; light: string; vein: string }) {
+  const ry = r * 0.9;
+  return (
+    <g>
+      <path d={`M0 0L${f(stalk + r * 0.2)} 0`} stroke={vein} strokeWidth={0.9} strokeLinecap="round" />
+      <ellipse cx={f(stalk + r)} cy={0} rx={f(r)} ry={f(ry)} fill={fill} />
+      <path d={`M${f(stalk)} 0A${f(r)} ${f(ry)} 0 0 1 ${f(stalk + r * 2)} 0Z`} fill={light} />
+      <path d={`M${f(stalk + r * 0.12)} 0L${f(stalk + r * 1.82)} 0`} stroke={vein} strokeWidth={0.6} opacity={0.55} />
+    </g>
+  );
+}
+
 /** Flat cedar/cypress spray: a rachis with alternating leaflets. */
 export function Frond({ len, fill, light, rachis }: { len: number; fill: string; light: string; rachis: string }) {
   const n = 9;
@@ -377,54 +413,6 @@ export function Cone({ r, fill, line }: { r: number; fill: string; line: string 
           fill="none"
           opacity={0.6}
         />
-      ))}
-    </g>
-  );
-}
-
-/** Saffron crocus opening toward +x, with its three red stigmas. */
-export function Crocus({
-  r,
-  outer,
-  inner,
-  vein,
-  stigma,
-  anther,
-}: {
-  r: number;
-  outer: string;
-  inner: string;
-  vein: string;
-  stigma: string;
-  anther: string;
-}) {
-  const back = petalPath(r, 0.34);
-  const front = petalPath(r * 0.94, 0.36);
-  return (
-    <g>
-      {[-30, 0, 30].map((a) => (
-        <path key={`b${a}`} d={back} fill={inner} transform={`rotate(${a})`} />
-      ))}
-      {[-0.26, 0, 0.26].map((k) => (
-        <path
-          key={`s${k}`}
-          d={`M${f(r * 0.2)} 0Q${f(r * 0.75)} ${f(r * k * 0.4)} ${f(r * 1.18)} ${f(r * k)}`}
-          stroke={stigma}
-          strokeWidth={f(r * 0.06)}
-          fill="none"
-          strokeLinecap="round"
-        />
-      ))}
-      {[-0.08, 0.1].map((k) => (
-        <ellipse key={`a${k}`} cx={f(r * 0.72)} cy={f(r * k)} rx={f(r * 0.12)} ry={f(r * 0.04)} fill={anther} />
-      ))}
-      {[-17, 17, 0].map((a, i) => (
-        <g key={`f${a}`} transform={`rotate(${a}) scale(${i === 2 ? 0.88 : 1})`}>
-          <path d={front} fill={outer} />
-          <path d={`M${f(r * 0.12)} 0L${f(r * 0.78)} 0`} stroke={vein} strokeWidth={0.8} opacity={0.5} />
-          <path d={`M${f(r * 0.18)} ${f(r * 0.06)}L${f(r * 0.62)} ${f(r * 0.14)}`} stroke={vein} strokeWidth={0.6} opacity={0.35} />
-          <path d={`M${f(r * 0.18)} ${f(-r * 0.06)}L${f(r * 0.62)} ${f(-r * 0.14)}`} stroke={vein} strokeWidth={0.6} opacity={0.35} />
-        </g>
       ))}
     </g>
   );

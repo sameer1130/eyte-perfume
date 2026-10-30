@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Bottle } from "@/components/product/Bottle";
+import { ProductImage } from "@/components/product/ProductImage";
 import { setScrollLocked } from "@/components/providers/SmoothScroll";
 import { FAMILIES } from "@/data/families";
 import { formatPrice, getProduct } from "@/lib/catalog";
 import { cn } from "@/lib/cn";
 import { cart, useCart } from "./cart-store";
+import { familySurface } from "@/lib/family-colors";
 
 const FREE_SHIPPING = 2000;
 
@@ -37,7 +38,7 @@ export function CartDrawer() {
     <div className={cn("fixed inset-0 z-50", !open && "pointer-events-none")} inert={!open}>
       <div
         onClick={cart.close}
-        className={cn("absolute inset-0 bg-ink/30 backdrop-blur-[2px] transition-opacity duration-500", open ? "opacity-100" : "opacity-0")}
+        className={cn("absolute inset-0 bg-scrim backdrop-blur-[2px] transition-opacity duration-500", open ? "opacity-100" : "opacity-0")}
       />
       <aside
         role="dialog"
@@ -45,7 +46,7 @@ export function CartDrawer() {
         aria-label="Shopping bag"
         data-lenis-prevent
         className={cn(
-          "absolute right-0 top-0 flex h-full w-full max-w-[460px] flex-col bg-paper shadow-2xl transition-transform duration-700 ease-[var(--ease-expo)]",
+          "absolute right-0 top-0 flex h-full w-full max-w-[460px] flex-col border-l hairline bg-paper shadow-2xl transition-transform duration-700 ease-[var(--ease-expo)]",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
@@ -95,10 +96,10 @@ export function CartDrawer() {
                     <Link
                       href={`/perfume/${product.slug}`}
                       onClick={cart.close}
-                      className="flex h-28 w-24 shrink-0 items-center justify-center rounded-sm"
-                      style={{ background: fam.colors.soft }}
+                      className="relative h-28 w-24 shrink-0 overflow-hidden rounded-sm"
+                      style={{ background: familySurface(fam) }}
                     >
-                      <Bottle product={product} className="h-24 w-auto" idSuffix="-bag" />
+                      <ProductImage product={product} sizes="96px" cutoutClassName="inset-x-3 top-2.5 bottom-3" />
                     </Link>
                     <div className="flex min-w-0 flex-1 flex-col">
                       <p className="eyebrow text-mute">{product.house}</p>

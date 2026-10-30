@@ -2,7 +2,8 @@ import Link from "next/link";
 import { FAMILIES } from "@/data/families";
 import type { Product } from "@/data/products";
 import { formatPrice, lowestPrice } from "@/lib/catalog";
-import { Bottle } from "./Bottle";
+import { familyInk, familySurface } from "@/lib/family-colors";
+import { ProductImage } from "./ProductImage";
 
 const BADGE: Record<NonNullable<Product["badges"]>[number], string> = {
   bestseller: "Bestseller",
@@ -20,31 +21,36 @@ export function ProductCard({ product }: { product: Product }) {
     <Link href={`/perfume/${product.slug}`} prefetch className="group block">
       <div
         className="relative aspect-[4/5] overflow-hidden rounded-[3px] transition-colors duration-700"
-        style={{ background: fam.colors.soft }}
+        style={{ background: familySurface(fam) }}
       >
         <div
           className="absolute inset-x-0 bottom-0 h-1/2 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-          style={{ background: `radial-gradient(60% 70% at 50% 100%, ${fam.colors.accent}33, transparent 70%)` }}
+          style={{ background: `radial-gradient(60% 70% at 50% 100%, color-mix(in oklab, ${familyInk(fam)} 20%, transparent), transparent 70%)` }}
         />
-        <Bottle
+        <ProductImage
           product={product}
-          className="absolute left-1/2 top-[52%] h-[74%] w-auto -translate-x-1/2 -translate-y-1/2 transition-transform duration-[900ms] ease-[var(--ease-expo)] group-hover:-translate-y-[54%] group-hover:scale-[1.03]"
+          sizes="(min-width: 1280px) 22vw, (min-width: 1024px) 30vw, 50vw"
+          cutoutClassName="inset-x-[16%] top-[10%] bottom-[16%]"
+          className="transition-transform duration-[900ms] ease-[var(--ease-expo)] group-hover:-translate-y-[2%] group-hover:scale-[1.03]"
         />
+        {/* Keeps the family label legible over a full photograph. */}
+        {!product.image.cutout && <div className="absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(to_top,rgb(0_0_0/0.55),transparent)]" />}
         {badge && <span className="eyebrow absolute left-4 top-4 rounded-full bg-paper/85 px-2.5 py-1 backdrop-blur">{BADGE[badge]}</span>}
         <span className="eyebrow absolute bottom-4 left-4 flex items-center gap-2 text-ink-2">
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: fam.colors.accent }} />
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: familyInk(fam) }} />
           {fam.short}
         </span>
         <span className="eyebrow absolute bottom-4 right-4 translate-y-2 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           Discover →
         </span>
       </div>
-      <div className="mt-4 flex items-start justify-between gap-4">
+      {/* Narrow mobile columns put the price under the name so wide display faces don't collide with it. */}
+      <div className="mt-4 sm:flex sm:items-start sm:justify-between sm:gap-4">
         <div className="min-w-0">
           <p className="eyebrow text-mute">{product.house}</p>
-          <h3 className="display mt-1.5 text-[26px] leading-[0.95]">{product.name}</h3>
+          <h3 className="display mt-1.5 text-[22px] leading-[0.95] sm:text-[26px]">{product.name}</h3>
         </div>
-        <div className="shrink-0 pt-0.5 text-right">
+        <div className="mt-2 flex items-baseline gap-2 sm:mt-0 sm:block sm:shrink-0 sm:pt-0.5 sm:text-right">
           <p className="text-sm font-medium tabular-nums">
             {product.sizes.length > 1 && <span className="text-mute">from </span>}
             {formatPrice(from)}

@@ -1,33 +1,31 @@
-"use client";
+import { ThemeStyle } from "../ThemeStyle";
 
 /*
- * Theme 2 — Arabian Nights palette. Redefining the palette variables re-skins
- * the header, footer, cart and every shared section, because all of them read
- * colours and fonts from these variables.
- *
- * The stylesheet is owned by the page and switched off (media="not all") when
- * Next.js hides the page with <Activity> after navigating away, so the theme
- * never leaks onto product or shop pages.
+ * Theme 2 — Arabian Nights palette. While it's the live theme, the root layout
+ * applies it to every page; the home page also carries it so /themes/arabian
+ * previews it (see ../ThemeStyle.tsx).
  */
-const ARABIAN_CSS = `
+export const ARABIAN_CSS = `
 :root {
-  --color-paper: #140a17;
-  --color-paper-2: #1c0f21;
-  --color-paper-3: #2a1631;
+  --color-paper: #0a0a0a;
+  --color-paper-2: #131313;
+  --color-paper-3: #1f1f1f;
   --color-ink: #f3e8d8;
   --color-ink-2: #d5c4b0;
-  --color-mute: #9c8794;
+  --color-mute: #8c8c8c;
   --color-gold: #d3af6b;
   --color-gold-2: #e9d29c;
   --color-line: rgb(243 232 216 / 0.14);
   --font-display: var(--font-bodoni), "Didot", "Bodoni 72", serif;
+  --color-scrim: rgb(0 0 0 / 0.6);
+  --family-soft: 0%;
+  --family-ink: 55%;
   color-scheme: dark;
 }
 .display {
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 0.92;
-  font-variation-settings: "opsz" 96;
 }
 .eyebrow, .btn {
   font-family: var(--font-cinzel), "Trajan Pro", serif;
@@ -37,7 +35,7 @@ const ARABIAN_CSS = `
 }
 .btn-ink {
   background: linear-gradient(135deg, #ecd6a0 0%, #c99c4f 55%, #a6772f 100%);
-  color: #1a0e12;
+  color: #111111;
 }
 .btn-ink:hover {
   background: linear-gradient(135deg, #f3e1b4 0%, #d4a95c 55%, #b5843a 100%);
@@ -51,16 +49,5 @@ const ARABIAN_CSS = `
 `;
 
 export function ArabianThemeStyle() {
-  return (
-    <style
-      ref={(el) => {
-        if (el) el.media = "all";
-        return () => {
-          if (el) el.media = "not all";
-        };
-      }}
-    >
-      {ARABIAN_CSS}
-    </style>
-  );
+  return <ThemeStyle css={ARABIAN_CSS} />;
 }

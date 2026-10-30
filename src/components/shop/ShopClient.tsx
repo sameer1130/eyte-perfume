@@ -6,6 +6,7 @@ import { FAMILIES, FAMILY_LIST, isFamilySlug } from "@/data/families";
 import { PRODUCTS, type Product } from "@/data/products";
 import { lowestPrice } from "@/lib/catalog";
 import { cn } from "@/lib/cn";
+import { familyInk } from "@/lib/family-colors";
 
 const COLLECTIONS = [
   { value: "", label: "All" },
@@ -40,9 +41,9 @@ function applyFilters(params: URLSearchParams): Product[] {
   const sorted = [...list];
   if (sort === "price-asc") sorted.sort((a, b) => lowestPrice(a) - lowestPrice(b));
   if (sort === "price-desc") sorted.sort((a, b) => lowestPrice(b) - lowestPrice(a));
-  if (sort === "rating") sorted.sort((a, b) => b.rating - a.rating);
+  if (sort === "rating") sorted.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
   if (sort === "bestsellers")
-    sorted.sort((a, b) => Number(!!b.badges?.includes("bestseller")) - Number(!!a.badges?.includes("bestseller")) || b.reviewCount - a.reviewCount);
+    sorted.sort((a, b) => Number(!!b.badges?.includes("bestseller")) - Number(!!a.badges?.includes("bestseller")) || (b.reviewCount ?? 0) - (a.reviewCount ?? 0));
   return sorted;
 }
 
@@ -124,7 +125,7 @@ export function ShopClient() {
                 on ? "border-ink bg-ink text-paper" : "hairline hover:border-ink",
               )}
             >
-              <span className="h-2 w-2 rounded-full" style={{ background: f.colors.accent }} />
+              <span className="h-2 w-2 rounded-full" style={{ background: familyInk(f) }} />
               {f.name}
             </button>
           );
@@ -159,7 +160,7 @@ export function ShopClient() {
 
       {activeFamily && (
         <p className="mx-auto mt-10 max-w-xl text-center text-[14px] leading-relaxed text-ink-2">
-          <span className="script mr-2 text-3xl" style={{ color: activeFamily.colors.accent }}>
+          <span className="script mr-2 text-3xl" style={{ color: familyInk(activeFamily) }}>
             {activeFamily.word}
           </span>
           {activeFamily.description}

@@ -5,6 +5,7 @@ import { Reveal, RevealLines } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FAMILY_LIST } from "@/data/families";
 import { productsInFamily } from "@/lib/catalog";
+import { familyInk, familySurface } from "@/lib/family-colors";
 
 export const metadata: Metadata = {
   title: "Scent Families",
@@ -24,7 +25,7 @@ export default function FamiliesPage() {
         const count = productsInFamily(fam.slug).length;
         const flip = i % 2 === 1;
         return (
-          <section key={fam.slug} className="relative flex min-h-[92svh] items-center overflow-hidden" style={{ background: i % 2 ? "var(--color-paper)" : fam.colors.soft }}>
+          <section key={fam.slug} className="relative flex min-h-[92svh] items-center overflow-hidden" style={{ background: i % 2 ? "var(--color-paper)" : familySurface(fam) }}>
             <Scene family={fam.slug} sides={flip ? ["left"] : ["right"]} plantWidth="clamp(280px, 52vw, 760px)" seed={i + 11} />
             <div className={`relative mx-auto flex w-full max-w-[1400px] px-5 md:px-10 xl:px-28 ${flip ? "justify-end" : "justify-start"}`}>
               <div className="max-w-xl">
@@ -34,7 +35,7 @@ export default function FamiliesPage() {
                 <RevealLines as="h2" className="display mt-5 text-[clamp(3.6rem,8vw,8rem)]">
                   {fam.name}
                 </RevealLines>
-                <p className="script -mt-2 text-[clamp(2.6rem,5vw,4.4rem)] leading-none" style={{ color: fam.colors.accent }}>
+                <p className="script -mt-2 text-[clamp(2.6rem,5vw,4.4rem)] leading-none" style={{ color: familyInk(fam) }}>
                   {fam.word}
                 </p>
                 <Reveal className="mt-6 text-[15px] leading-relaxed text-ink-2">{fam.description}</Reveal>

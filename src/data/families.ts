@@ -91,7 +91,7 @@ export const FAMILIES: Record<FamilySlug, Family> = {
       "Warm resins and precious spices from the old trade routes. Saffron, cardamom and cinnamon over a glowing amber base: bold and unforgettable.",
     keyNotes: ["Saffron", "Cardamom", "Cinnamon", "Amber", "Incense", "Pink Pepper"],
     wearsBest: "Night · Winter · Celebrations",
-    growth: "rise",
+    growth: "hang",
     colors: { accent: "#C4521C", deep: "#74290E", soft: "#F6E2D3" },
   },
   aquatic: {
@@ -104,7 +104,7 @@ export const FAMILIES: Record<FamilySlug, Family> = {
       "Crisp marine accords, cool mint and aromatic lavender. Effortless freshness that feels like a sea breeze on sun-warmed skin.",
     keyNotes: ["Sea Notes", "Mint", "Lavender", "Green Tea", "Ambroxan", "Sage"],
     wearsBest: "Daytime · Summer · Gym & travel",
-    growth: "rise",
+    growth: "hang",
     colors: { accent: "#2C86A6", deep: "#174A5E", soft: "#DCEEF2" },
   },
 };

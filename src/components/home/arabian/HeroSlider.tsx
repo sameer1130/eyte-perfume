@@ -30,9 +30,9 @@ type Slide = {
 const SLIDES: Slide[] = [
   {
     id: "velvet",
-    image: "/images/stock/hero-velvet-bloom.webp",
-    alt: "A round rose-gold perfume bottle resting on violet satin",
-    focus: "50% 62%",
+    image: "/images/stock/card-black-roses.webp",
+    alt: "A black perfume bottle resting among black roses",
+    focus: "50% 70%",
     words: ["Velvet", "Bloom"],
     arabic: "ورد",
     title: "The rose edit",
@@ -43,7 +43,7 @@ const SLIDES: Slide[] = [
     ],
     href: "/families/floral",
     cta: "Shop florals",
-    glow: "#8A3FB0",
+    glow: "#5c5c5c",
     petals: true,
   },
   {
@@ -135,7 +135,7 @@ export function HeroSlider() {
       onPointerLeave={() => setPaused(false)}
     >
       {/* Dusk backdrop: a glow per slide, cross-faded */}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,#1b0b21_0%,#140a17_55%,#1b100c_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#121212_0%,#0a0a0a_55%,#1b100c_100%)]" />
       {SLIDES.map((s, i) => (
         <div
           key={s.id}
@@ -144,7 +144,7 @@ export function HeroSlider() {
         />
       ))}
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[radial-gradient(80%_70%_at_50%_100%,rgb(90_56_34/0.55),transparent_70%)]" />
-      <Mashrabiya id="hero-lattice" className="text-gold opacity-[0.12]" />
+      <Mashrabiya id="hero-lattice" className="text-gold opacity-60" />
       <svg viewBox="0 0 1440 220" preserveAspectRatio="none" className="absolute inset-x-0 bottom-0 h-[18vh] w-full" aria-hidden="true">
         <path d="M0 150C180 96 300 130 460 110S760 60 900 92s300 70 540 22V220H0Z" fill="#1e1009" opacity="0.7" />
         <path d="M0 180c200-40 360-12 560-34s420-50 600-18 200 30 280 20V220H0Z" fill="#160b07" />
@@ -183,7 +183,7 @@ export function HeroSlider() {
               />
             </div>
           ))}
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(20_10_23/0.55),transparent_35%)]" aria-hidden="true" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(10_10_10/0.55),transparent_35%)]" aria-hidden="true" />
         </div>
 
         {/* Callouts (desktop) */}
@@ -228,8 +228,8 @@ export function HeroSlider() {
         </span>
       </h1>
 
-      {/* Controls */}
-      <div className="absolute inset-x-0 bottom-0 z-30 flex items-end justify-between gap-6 px-5 pb-6 md:px-10 md:pb-9 xl:px-28">
+      {/* Controls. Fixed columns and a fixed-width button keep the arrows and progress still between slides. */}
+      <div className="absolute inset-x-0 bottom-0 z-30 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-6 px-5 pb-6 md:grid-cols-[minmax(0,1fr)_auto_auto] md:px-10 md:pb-9 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:px-28">
         <div aria-live="polite" className="min-w-0">
           <p className="eyebrow text-gold-2">
             {String(index + 1).padStart(2, "0")} <span className="text-mute">/ {String(SLIDES.length).padStart(2, "0")}</span>
@@ -263,7 +263,7 @@ export function HeroSlider() {
           ))}
         </div>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2 justify-self-end">
           <button type="button" onClick={() => go(index - 1)} aria-label="Previous slide" className="grid h-12 w-12 cursor-pointer place-items-center rounded-full border border-gold/40 transition-colors hover:bg-gold/10">
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
               <path d="M15 5 8 12l7 7" />
@@ -274,7 +274,7 @@ export function HeroSlider() {
               <path d="m9 5 7 7-7 7" />
             </svg>
           </button>
-          <Link href={slide.href} className="btn btn-ink ml-2 hidden sm:inline-flex">
+          <Link href={slide.href} className="btn btn-ink ml-2 hidden w-[15.5rem] sm:inline-flex">
             {slide.cta}
           </Link>
         </div>

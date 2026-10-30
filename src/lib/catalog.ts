@@ -16,7 +16,7 @@ export function productsInFamily(family: FamilySlug): Product[] {
 /** Badged bestsellers first, topped up with the highest-rated perfumes. */
 export function bestsellers(limit = 8): Product[] {
   const badged = PRODUCTS.filter((p) => p.badges?.includes("bestseller"));
-  const rest = PRODUCTS.filter((p) => !badged.includes(p)).sort((a, b) => b.rating - a.rating);
+  const rest = PRODUCTS.filter((p) => !badged.includes(p)).sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
   return [...badged, ...rest].slice(0, limit);
 }
 

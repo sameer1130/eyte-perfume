@@ -7,6 +7,7 @@ import { cart, useCart } from "@/components/cart/cart-store";
 import { setScrollLocked } from "@/components/providers/SmoothScroll";
 import { FAMILY_LIST } from "@/data/families";
 import { cn } from "@/lib/cn";
+import { familyInk } from "@/lib/family-colors";
 
 const NAV = [
   { href: "/families", label: "Scent families" },
@@ -121,7 +122,7 @@ export function Header() {
       >
         <nav aria-label="Mobile" className="flex flex-col gap-2">
           {[{ href: "/", label: "Home" }, { href: "/shop", label: "The Collection" }, ...NAV].map((item) => (
-            <Link key={item.href} href={item.href} onClick={() => toggleMenu(false)} className="display text-[13vw] leading-[0.95]">
+            <Link key={item.href} href={item.href} onClick={() => toggleMenu(false)} className="display text-[10vw] leading-[0.95]">
               {item.label}
             </Link>
           ))}
@@ -136,7 +137,7 @@ export function Header() {
                 onClick={() => toggleMenu(false)}
                 className="eyebrow flex items-center gap-2 rounded-full border hairline px-3 py-2"
               >
-                <span className="h-2 w-2 rounded-full" style={{ background: f.colors.accent }} />
+                <span className="h-2 w-2 rounded-full" style={{ background: familyInk(f) }} />
                 {f.short}
               </Link>
             ))}
